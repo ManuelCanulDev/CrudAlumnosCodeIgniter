@@ -320,11 +320,10 @@ $(document).ready(function(){
                      	</a>
                         </td>
                     </tr>
-                     <?php }}else{ ?>
-	  	 <tr>
-	    <td>sin registros</td>
-	   
-	  </tr>
+                     <?php }
+                 }else{ ?>
+
+	  
 	  <?php } ?>
                 </tbody>
             </table>
