@@ -2,10 +2,15 @@
 
 class Alumnos extends CI_Controller{
 
+	public function _construct(){
+		parent::_construct();
+		$this->load->model('Alumno');
+	}
+
 	//FUNCION QUE CARGA TODOS LOS ALUMNOS CUANDO ESTEMOS EN EL INDEX
 	public function index(){
 
-		$this->load->model('Alumno');
+		
 
 		$data['alumnos'] = $this->Alumno->getAlumno();
 		$data['title'] = "Inicio";
@@ -22,7 +27,7 @@ class Alumnos extends CI_Controller{
 	//FUNCION QUE CARGA LA VISTA CON LOS DATOS DEL ALUMNO A VER
 	public function VerAlumno(){
 		# code...
-		$this->load->model('Alumno');
+		
 		$id = $this->uri->segment(3);
 		$data['alumno_a_ver'] = $this->Alumno->traerAlumno($id);
 		$this->load->view('Alumno/view',$data);
@@ -31,7 +36,7 @@ class Alumnos extends CI_Controller{
 	//FUNCION QUE CARGA LA VISTA CON LOS DATOS DEL ALUMNO A EDITAR
 	public function editarAlumno(){
 		# code...
-		$this->load->model('Alumno');
+		
 		$id = $this->uri->segment(3);
 		$data['alumno_a_editar'] = $this->Alumno->traerAlumno($id);
 		$this->load->view('Alumno/update',$data);
@@ -53,7 +58,7 @@ class Alumnos extends CI_Controller{
 			'matricula_alumno' => $this->input->post('matricula_alumno')
 		);
 
-		$this->load->model('Alumno');
+		
 		if($this->Alumno->insertAlumno($alumno)){
 			redirect('Alumnos');
 		}
@@ -69,7 +74,7 @@ class Alumnos extends CI_Controller{
 
 		$id = $this->input->post('id_alumno');
 
-		$this->load->model('Alumno');
+		
 
 		if($this->Alumno->updateAlumno($id,$alumno)){
 			redirect('Alumnos');
@@ -79,7 +84,7 @@ class Alumnos extends CI_Controller{
 	//FUNCION QUE CAMBIA LA VISTA CON LA PREGUNTA PARA ELIMINAR UN ALUMNO
 	public function confirmarEliminarAlumno(){
 		# code...
-		$this->load->model('Alumno');
+		
 		$id = $this->uri->segment(3);
 		$data['alumno_a_eliminar'] = $this->Alumno->traerAlumno($id);
 		$this->load->view('Alumno/delete',$data);
@@ -88,12 +93,56 @@ class Alumnos extends CI_Controller{
 	//FUNCION QUE ELIMINA UN ALUMNO DESDE EL FORMULARIO EN confirmarEliminarAlumno
 	public function eliminarAlumno(){
 		$id = $this->uri->segment(3);
-		$this->load->model('Alumno');
+		
 		if($this->Alumno->deleteAlumno($id)){
 			redirect('Alumnos');
 		}
 	}
 
+	public function add(){
+		# code...
+		$this->load->library("form_validation");
+		$this->load->helper("form");
+		$data["titulo"] = "Agregar Alumno";
+
+		$this->form_validation->set_rules("nombre","nombre","required");
+		$this->form_validation->set_rules("apellido","apellido","required");
+		$this->form_validation->set_rules("matricula","matricula","required");
+
+		if($this->form_validation->run() == FALSE){
+			$this->load->view("Alumno/add",$data);
+		}else{
+			$this->Alumno->setNews();
+			redirect('Alumnos');
+		}
+	}
+
+	public function update($id = null){
+		# code...
+		$this->load->library("form_validation");
+		$this->load->helper("form");
+
+		if($id != null){
+			$data['dato'] = $this->Alumno->traerAlumno($id);
+			$this->form_validation->set_rules("nombre_alumno","nombre_alumno","required");
+			$this->form_validation->set_rules("apellidos_alumno","apellidos_alumno","required");
+			$this->form_validation->set_rules("matricula_alumno","matricula_alumno","required");
+			if($this->form_validation->run() == FALSE){
+			$this->load->view("Alumno/update",$data);
+			}else{
+				
+				$this->Alumno->updateAlumno($id);
+				redirect('Alumnos');
+			}
+		}else{
+			$this->Alumno->updateNews($id);
+			redirect("Alumnos");
+		}
+
+	}
+
 }
 
 ?>
+
+

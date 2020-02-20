@@ -232,6 +232,31 @@
 		font-weight: normal;
 	}	
 </style>
+<script type="text/javascript">
+$(document).ready(function(){
+	// Activate tooltip
+	$('[data-toggle="tooltip"]').tooltip();
+	
+	// Select/Deselect checkboxes
+	var checkbox = $('table tbody input[type="checkbox"]');
+	$("#selectAll").click(function(){
+		if(this.checked){
+			checkbox.each(function(){
+				this.checked = true;                        
+			});
+		} else{
+			checkbox.each(function(){
+				this.checked = false;                        
+			});
+		} 
+	});
+	checkbox.click(function(){
+		if(!this.checked){
+			$("#selectAll").prop("checked", false);
+		}
+	});
+});
+</script>
 </head>
 <body>
     <div class="container">
@@ -241,9 +266,8 @@
             	
                 <div class="row">
                     <div class="col-sm-6">
-						<h2>Alumno <b><?= $dato->id_alumno;?></b></h2>
+						<h2>Agregando <b>Alumno</b></h2>
 					</div>
-					
 					<div class="col-sm-6">
 						<a href="<?php echo base_url(); ?>index.php/Alumnos" class="btn btn-info"><i class="material-icons">&#xe5c4;</i> <span>Regresar</span></a>
 											
@@ -251,25 +275,20 @@
                 </div>
                
             </div>
-            
-           
-             <?php echo validation_errors(); ?>
-			<?php echo form_open('Alumnos/update'); ?>
-
+            <?php echo validation_errors(); ?>
+<?php echo form_open('alumnos/add'); ?>
             	
-				<input style="display: none;" name="id_alumno" value="<?= $dato->id_alumno;?>" type="text" class="form-control">
-				
 	            <div class="form-group">
 					<label>Nombre</label>
-					<input name="nombre_alumno" value="<?= $dato->nombre_alumno;?>" type="text" class="form-control">
+					<input name="nombre" type="text" class="form-control">
 				</div>
 				<div class="form-group">
 					<label>Apellido</label>
-					<input name="apellidos_alumno" value="<?= $dato->apellidos_alumno;?>" type="text" class="form-control">
+					<input name="apellido" type="text" class="form-control">
 				</div>
 				<div class="form-group">
 					<label>Matricula</label>
-					<input name="matricula_alumno" value="<?= $dato->matricula_alumno;?>" type="text" class="form-control">
+					<input name="matricula" type="text" class="form-control">
 				</div>
 				<input type="submit" class="btn btn-success" value="Guardar">
 			</form>

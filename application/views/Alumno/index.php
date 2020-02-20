@@ -267,7 +267,7 @@ $(document).ready(function(){
 						<h2>CRUD <b>Alumnos</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="<?php echo base_url(); ?>index.php/Alumnos/confirmarAgregarAlumno" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Agregar Alumno</span></a>
+						<a href="<?php echo base_url(); ?>index.php/Alumnos/add" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Agregar Alumno</span></a>
 											
 					</div>
                 </div>
@@ -304,7 +304,7 @@ $(document).ready(function(){
                         	</i>
                         </a>
 
-                         <a href="<?php echo base_url(); ?>index.php/Alumnos/editarAlumno/<?php echo $fila->id_alumno; ?> " 
+                         <a href="<?php echo base_url(); ?>index.php/Alumnos/update/<?php echo $fila->id_alumno; ?> " 
                          	class="edit">
                          	<i class="material-icons" 
                          		data-toggle="tooltip" 

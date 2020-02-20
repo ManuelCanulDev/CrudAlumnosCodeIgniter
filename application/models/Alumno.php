@@ -8,7 +8,6 @@ class Alumno extends CI_model{
 		$query = $this->db->get('alumnos',10);
 
 		return $query->result();
-
 	}
 
 	//FUNCION QUE INSERTA A LOS ALUMNOS PASANDOLE UN ARRAY CON TODOS LOS DATOS
@@ -47,6 +46,29 @@ class Alumno extends CI_model{
 		}else{
 			return false;
 		}
+	}
+
+	public function setNews(){
+		
+
+		$alumno = array(
+			'nombre_alumno' => $this->input->post('nombre'),
+			'apellidos_alumno' => $this->input->post('apellido'),
+			'matricula_alumno' => $this->input->post('matricula')
+		);
+
+		return $this->db->insert("alumnos",$alumno);
+	}
+
+	public function updateNews($id = null){
+		# code...
+		$alumno = array(
+			'nombre_alumno' => $this->input->post('nombre_alumno'),
+			'apellidos_alumno' => $this->input->post('apellidos_alumno'),
+			'matricula_alumno' => $this->input->post('matricula_alumno')
+		);
+		$this->db->where('id_alumno',$this->input->post('id_alumno'));
+		return $this->db->update('alumnos',$alumno);
 	}
 
 }
